@@ -1,6 +1,10 @@
 #include <cstdio>
 #include <allegro5/allegro.h>
+<<<<<<< HEAD
 #include <allegro5/allegro_primitives.h>
+=======
+#include <allegro5/allegro_image.h>
+>>>>>>> d759468662e5d478880ed7b4dbaba0a5561f211f
 
 void must_init(bool test, const char *desc){
     if (test) return;
@@ -29,8 +33,15 @@ int main(int argc, char **argv){
     ALLEGRO_TIMER* timer = al_create_timer(1.0 / 30.0);
     must_init(timer, "timer");
 
+<<<<<<< HEAD
     ALLEGRO_EVENT_QUEUE* queue = al_create_event_queue();
     must_init(queue, "queue");
+=======
+
+    //initialize image
+    check_init(al_init_image_addon(), "image");
+    ALLEGRO_BITMAP *spaceship = al_load_bitmap("pic/spaceship.png");
+>>>>>>> d759468662e5d478880ed7b4dbaba0a5561f211f
 
     must_init(al_init_primitives_addon(), "primitives");
     
