@@ -19,11 +19,11 @@ class SquareObstacle : public Obstacle {
             this -> x = x;
             this -> y = y;
             this -> length = l;
-            al_draw_filled_rectangle(this -> x, this -> y, this -> x + this -> lenght, this -> y + this -> lenght, al_map_rgb(255, 255, 255));
+            al_draw_filled_rectangle(this -> x, this -> y, this -> x + this -> length, this -> y + this -> length, al_map_rgb(255, 255, 255));
         }
 
         void update(){
-            al_draw_filled_rectangle(this -> x, this -> y, this -> x + this -> lenght, this -> y + this -> lenght, al_map_rgb(255, 255, 255));
+            al_draw_filled_rectangle(this -> x, this -> y, this -> x + this -> length, this -> y + this -> length, al_map_rgb(255, 255, 255));
         }
 };
 
