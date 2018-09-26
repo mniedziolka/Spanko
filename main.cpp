@@ -2,6 +2,38 @@
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_primitives.h>
 
+enum KEYS{UP, DOWN, LEFT, RIGHT};
+bool keys[4];
+
+class PLAYER{
+        int pos_x;
+        int pos_y;
+        int size = 20;
+        int speed = 5;
+    public:
+        PLAYER (int x, int y)
+        {
+            pos_x = x;
+            pos_y = y;
+            al_draw_filled_rectangle(pos_x, pos_y, pos_x + size, pos_y + size, al_map_rgb(255, 255, 255));
+        }
+        void move_up(){
+            pos_y -= speed;
+        }
+        void move_down(){
+            pos_y += speed;
+        }
+        void move_left(){
+            pos_x -= speed;
+        }
+        void move_right(){
+            pos_x += speed;
+        }
+        void update(){
+            al_draw_filled_rectangle(pos_x, pos_y, pos_x + size, pos_y + size, al_map_rgb(255, 255, 255));
+        }
+};
+
 void must_init(bool test, const char *desc){
     if (test) return;
     
@@ -36,9 +68,8 @@ int main(int argc, char **argv){
     
     al_register_event_source(queue, al_get_keyboard_event_source());
     al_register_event_source(queue, al_get_timer_event_source(timer));
-    
-    int pos_x = 0;
-    int pos_y = 0;
+
+    PLAYER player(0,0);
 
     bool redraw = true;
     bool done = false;
@@ -46,55 +77,67 @@ int main(int argc, char **argv){
 
     al_start_timer(timer);
     while(!done){
-        printf("gowno\n");
         al_wait_for_event(queue, &event);
-        printf("gowno1\n");
         switch(event.type){
             case ALLEGRO_EVENT_TIMER:
-                printf("gowno1\n");
                 redraw = true;
+                if (keys[UP]){
+                    player.move_up();
+                }
+                if (keys[DOWN]){
+                    player.move_down();
+                }
+                if (keys[LEFT]){
+                    player.move_left();
+                }
+                if (keys[RIGHT]){
+                    player.move_right();
+                }
                 break;
             case ALLEGRO_EVENT_KEY_DOWN:
                 switch(event.keyboard.keycode){
                     case ALLEGRO_KEY_UP:
-                        printf("gowno1\n");
-                        pos_y -= 5;
-                        redraw = true;
+                        keys[UP] = true;
                         break;
                     case ALLEGRO_KEY_DOWN:
-                        pos_y += 5;
-                        redraw = true;
-                        printf("gowno1\n");
+                        keys[DOWN] = true;
                         break;
                     case ALLEGRO_KEY_LEFT:
-                        pos_x -= 5;
-                        redraw = true;
-                        printf("gowno1\n");
+                        keys[LEFT] = true;
                         break;
                     case ALLEGRO_KEY_RIGHT:
-                        pos_x += 5;
-                        redraw = true;
-                        printf("gowno1\n");
+                        keys[RIGHT] = true;
                         break;
                 }
                 break;
             case ALLEGRO_EVENT_DISPLAY_CLOSE:
-                printf("gowno2\n");
                 done = true;
                 break;
             case ALLEGRO_EVENT_KEY_UP:
-                printf("gowno1\n");
+                switch(event.keyboard.keycode){
+                    case ALLEGRO_KEY_UP:
+                        keys[UP] = false;
+                        break;
+                    case ALLEGRO_KEY_DOWN:
+                        keys[DOWN] = false;
+                        break;
+                    case ALLEGRO_KEY_LEFT:
+                        keys[LEFT] = false;
+                        break;
+                    case ALLEGRO_KEY_RIGHT:
+                        keys[RIGHT] = false;
+                        break;
+                }
                 if (event.keyboard.keycode == ALLEGRO_KEY_ESCAPE)
                     done = true;
                 break;
         }
-        
         if (done)
             break;
         if (redraw && al_is_event_queue_empty(queue))
         {
             al_clear_to_color(al_map_rgb(0, 0, 0));
-            al_draw_filled_rectangle(pos_x, pos_y, pos_x + 20, pos_y + 20, al_map_rgb(255,255,255));
+            player.update();
             al_flip_display();
             redraw = false;
         }
