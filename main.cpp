@@ -2,6 +2,31 @@
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_primitives.h>
 
+
+class Obstacle {
+    public:
+        int x, y;
+        void move(int vx, int vy){
+            x += vx;
+            y += vy;
+        }
+};
+
+class SquareObstacle : public Obstacle {
+    public:
+        int length;
+        SquareObstacle(int x, int y, int l){
+            this -> x = x;
+            this -> y = y;
+            this -> length = l;
+            al_draw_filled_rectangle(this -> x, this -> y, this -> x + this -> lenght, this -> y + this -> lenght, al_map_rgb(255, 255, 255));
+        }
+
+        void update(){
+            al_draw_filled_rectangle(this -> x, this -> y, this -> x + this -> lenght, this -> y + this -> lenght, al_map_rgb(255, 255, 255));
+        }
+};
+
 enum KEYS{UP, DOWN, LEFT, RIGHT};
 bool keys[4];
 
@@ -11,8 +36,7 @@ class PLAYER{
         int size = 20;
         int speed = 5;
     public:
-        PLAYER (int x, int y)
-        {
+        PLAYER (int x, int y){
             pos_x = x;
             pos_y = y;
             al_draw_filled_rectangle(pos_x, pos_y, pos_x + size, pos_y + size, al_map_rgb(255, 255, 255));
@@ -76,6 +100,10 @@ int main(int argc, char **argv){
     ALLEGRO_EVENT event;
 
     al_start_timer(timer);
+
+    SquareObstacle * test = new SquareObstacle(600, 400, 30);
+    
+
     while(!done){
         al_wait_for_event(queue, &event);
         switch(event.type){
