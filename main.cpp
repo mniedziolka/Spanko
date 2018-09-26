@@ -3,18 +3,20 @@
 #include <allegro5/allegro_primitives.h>
 
 
-class Obstacle {
-    public:
+class Object {
+    protected:
         int x, y;
+    public:
         void move(int vx, int vy){
             x += vx;
             y += vy;
         }
 };
 
-class SquareObstacle : public Obstacle {
-    public:
+class SquareObstacle : public Object {
+    protected:
         int length;
+    public:
         SquareObstacle(int x, int y, int l){
             this -> x = x;
             this -> y = y;
@@ -30,31 +32,19 @@ class SquareObstacle : public Obstacle {
 enum KEYS{UP, DOWN, LEFT, RIGHT};
 bool keys[4];
 
-class PLAYER{
-        int pos_x;
-        int pos_y;
-        int size = 20;
-        int speed = 5;
+class Player : public Object{
+    protected:
+        int length = 20;
+        //int speed = 5;
     public:
-        PLAYER (int x, int y){
-            pos_x = x;
-            pos_y = y;
-            al_draw_filled_rectangle(pos_x, pos_y, pos_x + size, pos_y + size, al_map_rgb(255, 255, 255));
+        Player (int x, int y){
+            this -> x = x;
+            this -> y = y;
+            al_draw_filled_rectangle(this -> x, this -> y, this -> x + this -> length, this -> y + this -> length, al_map_rgb(255, 255, 255));
         }
-        void move_up(){
-            pos_y -= speed;
-        }
-        void move_down(){
-            pos_y += speed;
-        }
-        void move_left(){
-            pos_x -= speed;
-        }
-        void move_right(){
-            pos_x += speed;
-        }
+
         void update(){
-            al_draw_filled_rectangle(pos_x, pos_y, pos_x + size, pos_y + size, al_map_rgb(255, 255, 255));
+            al_draw_filled_rectangle(this -> x, this -> y, this -> x + this -> length, this -> y + this -> length, al_map_rgb(255, 255, 255));
         }
 };
 
@@ -93,8 +83,8 @@ int main(int argc, char **argv){
     al_register_event_source(queue, al_get_keyboard_event_source());
     al_register_event_source(queue, al_get_timer_event_source(timer));
 
-    PLAYER player(0,0);
-
+    Player player(0,0);
+    int speed = 5;
     bool redraw = true;
     bool done = false;
     ALLEGRO_EVENT event;
@@ -110,16 +100,16 @@ int main(int argc, char **argv){
             case ALLEGRO_EVENT_TIMER:
                 redraw = true;
                 if (keys[UP]){
-                    player.move_up();
+                    player.move(0, -speed);
                 }
                 if (keys[DOWN]){
-                    player.move_down();
+                    player.move(0, speed);
                 }
                 if (keys[LEFT]){
-                    player.move_left();
+                    player.move(-speed, 0);
                 }
                 if (keys[RIGHT]){
-                    player.move_right();
+                    player.move(speed, 0);
                 }
                 
                 test -> move(-1, 0);
