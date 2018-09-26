@@ -1,28 +1,17 @@
 #include <cstdio>
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_primitives.h>
+#include <allegro5/allegro_image.h>
 
 #include "object.h"
 #include "square_object.h"
+#include "player.h"
 
+const int WIDTH = 960;
+const int HEIGHT = 540;
+const int NUM_METEORES = 7; 
 enum KEYS{UP, DOWN, LEFT, RIGHT};
 bool keys[4];
-
-class Player : public Object{
-    protected:
-        int length = 20;
-        //int speed = 5;
-    public:
-        Player (int x, int y){
-            this -> x = x;
-            this -> y = y;
-            al_draw_filled_rectangle(this -> x, this -> y, this -> x + this -> length, this -> y + this -> length, al_map_rgb(255, 255, 255));
-        }
-
-        void update(){
-            al_draw_filled_rectangle(this -> x, this -> y, this -> x + this -> length, this -> y + this -> length, al_map_rgb(255, 255, 255));
-        }
-};
 
 void must_init(bool test, const char *desc){
     if (test) return;
@@ -32,6 +21,7 @@ void must_init(bool test, const char *desc){
 }
 
 int main(int argc, char **argv){
+    SquareObstacle* meteors[NUM_METEORES];
 
     //initialize allegro
     must_init(al_init(), "allegro");
@@ -55,13 +45,15 @@ int main(int argc, char **argv){
     must_init(queue, "queue");
 
     must_init(al_init_primitives_addon(), "primitives");
+    must_init(al_init_image_addon(), "image addon");
     
     al_register_event_source(queue, al_get_keyboard_event_source());
     al_register_event_source(queue, al_get_timer_event_source(timer));
 
-    Player player(0,0);
+    Player player(62, 21);
+    must_init(player.model, "player model");
     
-    int speed = 5;
+    // int speed = 5;
     bool redraw = true;
     bool done = false;
     ALLEGRO_EVENT event;
@@ -77,16 +69,16 @@ int main(int argc, char **argv){
             case ALLEGRO_EVENT_TIMER:
                 redraw = true;
                 if (keys[UP]){
-                    player.move(0, -speed);
+                    player.move(0, -player.speed);
                 }
                 if (keys[DOWN]){
-                    player.move(0, speed);
+                    player.move(0, player.speed);
                 }
                 if (keys[LEFT]){
-                    player.move(-speed, 0);
+                    player.move(-player.speed, 0);
                 }
                 if (keys[RIGHT]){
-                    player.move(speed, 0);
+                    player.move(player.speed, 0);
                 }
                 
                 test -> move(-1, 0);
