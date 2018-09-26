@@ -19,11 +19,11 @@ class SquareObstacle : public Obstacle {
             this -> x = x;
             this -> y = y;
             this -> length = l;
-            al_draw_filled_rectangle(this -> x, this -> y, this -> x + this -> lenght, this -> y + this -> lenght, al_map_rgb(255, 255, 255));
+            al_draw_filled_rectangle(this -> x, this -> y, this -> x + this -> length, this -> y + this -> length, al_map_rgb(255, 255, 255));
         }
 
         void update(){
-            al_draw_filled_rectangle(this -> x, this -> y, this -> x + this -> lenght, this -> y + this -> lenght, al_map_rgb(255, 255, 255));
+            al_draw_filled_rectangle(this -> x, this -> y, this -> x + this -> length, this -> y + this -> length, al_map_rgb(255, 255, 255));
         }
 };
 
@@ -121,6 +121,8 @@ int main(int argc, char **argv){
                 if (keys[RIGHT]){
                     player.move_right();
                 }
+                
+                test -> move(-1, 0);
                 break;
             case ALLEGRO_EVENT_KEY_DOWN:
                 switch(event.keyboard.keycode){
@@ -166,6 +168,7 @@ int main(int argc, char **argv){
         {
             al_clear_to_color(al_map_rgb(0, 0, 0));
             player.update();
+            test -> update();
             al_flip_display();
             redraw = false;
         }
