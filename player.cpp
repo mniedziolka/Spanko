@@ -1,6 +1,7 @@
 #include <allegro5/allegro_image.h>
 
 #include "player.h"
+#include "globals.h"
 
 Player::Player(int nose_x, int nose_y){
     this -> nose_x = nose_x;
@@ -19,13 +20,13 @@ void Player::update(){
 }
 
 void Player::move(int vx, int vy){
-    if (nose_x + vx <= 960 && rear_x + vx >= 0){
+    if (nose_x + vx <= WIDTH && rear_x + vx >= 0){
         this -> nose_x += vx;
         this -> lwing_x += vx;
         this -> rwing_x += vx;
         this -> rear_x += vx;
     }
-    if (lwing_y + vy >= 0 && rwing_y + vy <= 540){
+    if (lwing_y + vy >= 0 && rwing_y + vy <= HEIGHT){
         this -> nose_y += vy;
         this -> lwing_y += vy;
         this -> rwing_y += vy;

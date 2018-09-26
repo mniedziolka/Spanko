@@ -6,10 +6,11 @@
 #include "object.h"
 #include "square_object.h"
 #include "player.h"
+#include "globals.h"
 
-const int WIDTH = 960;
-const int HEIGHT = 540;
-const int NUM_METEORES = 7; 
+// const int WIDTH = 960;
+// const int HEIGHT = 540;
+// const int NUM_METEORES = 7; 
 enum KEYS{UP, DOWN, LEFT, RIGHT};
 bool keys[4];
 
@@ -34,7 +35,7 @@ int main(int argc, char **argv){
     //create display
     ALLEGRO_DISPLAY* display = nullptr;
 
-    display = al_create_display(960, 540);
+    display = al_create_display(WIDTH, HEIGHT);
     al_set_window_title(display, "Check Window");
     must_init(display, "display");
 
