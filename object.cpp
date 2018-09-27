@@ -1,6 +1,15 @@
-#include "object.h"
+#include <vector>
 
-void Object::move(int vx, int vy){
-    this -> x += vx;
-    this -> y += vy;
+#include "object.h"
+#include "point.h"
+
+Object::Object(int n, std::vector<Point> &vertices){
+    this -> n = n;
+    this -> vertices = vertices;
+}
+
+void Object::move(Point vec){
+    for(int i = 0; i < n; i++){
+        this -> vertices[i] += vec;
+    }
 }

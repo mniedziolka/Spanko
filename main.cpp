@@ -4,7 +4,6 @@
 #include <allegro5/allegro_image.h>
 
 #include "object.h"
-#include "square_object.h"
 #include "player.h"
 #include "globals.h"
 #include "point.h"
@@ -23,7 +22,7 @@ void must_init(bool test, const char *desc){
 }
 
 int main(int argc, char **argv){
-    SquareObstacle* meteors[NUM_METEORS];
+    //SquareObstacle* meteors[NUM_METEORS];
 
     //initialize allegro
     must_init(al_init(), "allegro");
@@ -62,7 +61,7 @@ int main(int argc, char **argv){
 
     al_start_timer(timer);
 
-    SquareObstacle * test = new SquareObstacle(600, 400, 30);
+    //SquareObstacle * test = new SquareObstacle(600, 400, 30);
     
 
     while(!done){
@@ -83,7 +82,7 @@ int main(int argc, char **argv){
                     player.move(player.speed, 0);
                 }
                 
-                test -> move(-1, 0);
+                //test -> move(-1, 0);
                 break;
             case ALLEGRO_EVENT_KEY_DOWN:
                 switch(event.keyboard.keycode){
@@ -129,7 +128,7 @@ int main(int argc, char **argv){
         {
             al_clear_to_color(al_map_rgb(0, 0, 0));
             player.update();
-            test -> update();
+            //test -> update();
             al_flip_display();
             redraw = false;
         }

@@ -1,11 +1,17 @@
 #ifndef OBJECT_H
 #define OBJECT_H
 
+#include <vector>
+
+#include "point.h"
+
 class Object {
     protected:
-        int x, y;
+        int n;
+        std::vector<Point> vertices;
     public:
-        void move(int vx, int vy);
+        Object(int n, std::vector<Point> &vertices);
+        void move(Point vec);
 };
 
 #endif
