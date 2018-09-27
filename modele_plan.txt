@@ -1,0 +1,10 @@
+Modele:
+
+Samolot
+Strzał (kilka rodzajów później)
+Przeszkody
+Górne i dolne ograniczenie pola
+
+Statki przeciwników
+Jakiś boss?
+Jakieś powerupy?
