@@ -13,3 +13,7 @@ void Object::move(Point vec){
         this -> vertices[i] += vec;
     }
 }
+
+bool Object::check_collision(Object obstacle){
+    
+}
