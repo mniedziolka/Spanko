@@ -4,16 +4,18 @@
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_image.h>
 
+#include "point.h"
+
 class Player{
     protected:
-        int nose_x, nose_y;
-        int lwing_x, lwing_y;
-        int rwing_x, rwing_y;
-        int rear_x;
+        Point nose;
     public:
         ALLEGRO_BITMAP* model = nullptr;
         int speed;
-        Player(int nose_x, int nose_y);
+        Player(Point nose);
+        Point get_lwing();
+        Point get_rwing();
+        Point get_rear();
         void update();
         void move(int vx, int vy);
 };

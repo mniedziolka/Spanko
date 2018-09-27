@@ -7,6 +7,7 @@
 #include "square_object.h"
 #include "player.h"
 #include "globals.h"
+#include "point.h"
 
 // const int WIDTH = 960;
 // const int HEIGHT = 540;
@@ -22,7 +23,7 @@ void must_init(bool test, const char *desc){
 }
 
 int main(int argc, char **argv){
-    SquareObstacle* meteors[NUM_METEORES];
+    SquareObstacle* meteors[NUM_METEORS];
 
     //initialize allegro
     must_init(al_init(), "allegro");
@@ -51,7 +52,7 @@ int main(int argc, char **argv){
     al_register_event_source(queue, al_get_keyboard_event_source());
     al_register_event_source(queue, al_get_timer_event_source(timer));
 
-    Player player(62, 21);
+    Player player(Point(62, 21));
     must_init(player.model, "player model");
     
     // int speed = 5;

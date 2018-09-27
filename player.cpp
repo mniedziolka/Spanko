@@ -2,33 +2,33 @@
 
 #include "player.h"
 #include "globals.h"
+#include "point.h"
 
-Player::Player(int nose_x, int nose_y){
-    this -> nose_x = nose_x;
-    this -> nose_y = nose_y;
-    this -> lwing_x = nose_x - 45;
-    this -> lwing_y = nose_y - 21;
-    this -> rwing_x = nose_x - 45;
-    this -> rwing_y = nose_y + 21;
-    this -> rear_x = nose_x - 61;
+Player::Player(Point nose){
+    this -> nose = nose;
     this -> speed = 5;
     this -> model = al_load_bitmap("pic/spaceship.png");
 }
 
+Point Player::get_lwing(){
+    return Point(-45, -21) += nose;
+}
+
+Point Player::get_rwing(){
+    return Point(-45, 21) += nose;
+}
+
+Point Player::get_rear(){
+    return Point(-61, 0) += nose;
+}
+
 void Player::update(){
-    al_draw_bitmap(this -> model, this -> rear_x, this -> lwing_y, 0);
+    al_draw_bitmap(this -> model, this -> get_rear().x, this -> get_lwing().y, 0);
 }
 
 void Player::move(int vx, int vy){
-    if (nose_x + vx <= WIDTH && rear_x + vx >= 0){
-        this -> nose_x += vx;
-        this -> lwing_x += vx;
-        this -> rwing_x += vx;
-        this -> rear_x += vx;
-    }
-    if (lwing_y + vy >= 0 && rwing_y + vy <= HEIGHT){
-        this -> nose_y += vy;
-        this -> lwing_y += vy;
-        this -> rwing_y += vy;
-    }
+    if ((this -> nose).x + vx <= WIDTH && this -> get_rear().x + vx >= 0)
+        this -> nose.x += vx;
+    if (this -> get_lwing().y + vy >= 0 && this -> get_rwing().y + vy <= HEIGHT)
+        this -> nose.y += vy;
 }
