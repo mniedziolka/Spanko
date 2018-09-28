@@ -62,8 +62,11 @@ int main(int argc, char **argv){
     al_start_timer(timer);
 
     //SquareObstacle * test = new SquareObstacle(600, 400, 30);
+    std::vector<Point> t = {Point(50, 50), Point(100, 100), Point(200, 75)};
+    std::vector<Point> t2 = {Point(250, 50), Point(300, 100), Point(400, 75)};
+    Object * test = new Object(3, t);
+    Object * test2 = new Object(3, t2);
     
-
     while(!done){
         al_wait_for_event(queue, &event);
         switch(event.type){
@@ -128,6 +131,10 @@ int main(int argc, char **argv){
         {
             al_clear_to_color(al_map_rgb(0, 0, 0));
             player.update();
+            test -> move(Point(2, 0));
+            test -> draw();
+            test2 -> draw();
+            printf("%d", test -> check_collision(*test2));
             //test -> update();
             al_flip_display();
             redraw = false;
