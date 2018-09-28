@@ -51,8 +51,9 @@ int main(int argc, char **argv){
     al_register_event_source(queue, al_get_keyboard_event_source());
     al_register_event_source(queue, al_get_timer_event_source(timer));
 
-    Player player(Point(62, 21));
-    must_init(player.model, "player model");
+    std::vector<Point> playertemp = {Point(0, 0), Point(50, 30), Point(0, 60)};
+    Player * player = new Player(3, playertemp);
+    
     
     // int speed = 5;
     bool redraw = true;
@@ -73,16 +74,16 @@ int main(int argc, char **argv){
             case ALLEGRO_EVENT_TIMER:
                 redraw = true;
                 if (keys[UP]){
-                    player.move(0, -player.speed);
+                    player -> move(Point(0, -(player -> speed)));
                 }
                 if (keys[DOWN]){
-                    player.move(0, player.speed);
+                    player -> move(Point(0, player -> speed));
                 }
                 if (keys[LEFT]){
-                    player.move(-player.speed, 0);
+                    player -> move(Point(-(player -> speed), 0));
                 }
                 if (keys[RIGHT]){
-                    player.move(player.speed, 0);
+                    player -> move(Point(player -> speed, 0));
                 }
                 
                 //test -> move(-1, 0);
@@ -130,12 +131,12 @@ int main(int argc, char **argv){
         if (redraw && al_is_event_queue_empty(queue))
         {
             al_clear_to_color(al_map_rgb(0, 0, 0));
-            player.update();
-            test -> move(Point(2, 0)); 
+            player -> draw();
+            //test -> move(Point(2, 0)); 
             test -> draw();
             test2 -> draw();
             printf("%d", test -> check_collision(test2));
-            if(test -> check_collision(test2))
+            if(player -> check_collision(test2))
                 sleep(2);
             //test -> update();
             al_flip_display();
