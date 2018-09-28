@@ -8,61 +8,66 @@
 #include "globals.h"
 #include "point.h"
 
-// const int WIDTH = 960;
-// const int HEIGHT = 540;
-// const int NUM_METEORES = 7; 
 enum KEYS{UP, DOWN, LEFT, RIGHT};
 bool keys[4];
 
-void must_init(bool test, const char *desc){
-    if (test) return;
-    
-    printf("couldn't initialize %s\n", desc);
-    exit(-1);
-}
-
 int main(int argc, char **argv){
-    //SquareObstacle* meteors[NUM_METEORS];
 
-    //initialize allegro
-    must_init(al_init(), "allegro");
+    if(!al_init()){
+        fprintf(stderr, "Failed to initialize allegro!\n");
+        exit(-1);
+    }
 
-    //install keyboard
-    must_init(al_install_keyboard(), "keyboard");
+    if(!al_install_keyboard()){
+        fprintf(stderr, "Failed to initialize keyboard!\n");
+        exit(-1);
+    }
 
     ALLEGRO_KEYBOARD_STATE keyboard;
 
-    //create display
     ALLEGRO_DISPLAY* display = nullptr;
 
     display = al_create_display(WIDTH, HEIGHT);
     al_set_window_title(display, "Check Window");
-    must_init(display, "display");
+
+    if(!display){
+        fprintf(stderr, "Failed to create display!\n");
+        exit(-1);
+    }
 
     ALLEGRO_TIMER* timer = al_create_timer(1.0 / 30.0);
-    must_init(timer, "timer");
+    if(!timer){
+        fprintf(stderr, "Failed to initialize timer!\n");
+        exit(-1);
+    }
 
     ALLEGRO_EVENT_QUEUE* queue = al_create_event_queue();
-    must_init(queue, "queue");
+    if(!queue){
+        fprintf(stderr, "Failed to create event queue!\n");
+        exit(-1);
+    }
 
-    must_init(al_init_primitives_addon(), "primitives");
-    must_init(al_init_image_addon(), "image addon");
+    if(!al_init_primitives_addon()){
+        fprintf(stderr, "Failed to initialize primitives!\n");
+        exit(-1);
+    }
+    if(!al_init_image_addon()){
+        fprintf(stderr, "Failed to initialize image_addon!\n");
+        exit(-1);
+    }
     
     al_register_event_source(queue, al_get_keyboard_event_source());
     al_register_event_source(queue, al_get_timer_event_source(timer));
-
-    std::vector<Point> playertemp = {Point(0, 0), Point(50, 30), Point(0, 60)};
-    Player * player = new Player(3, playertemp);
     
-    
-    // int speed = 5;
     bool redraw = true;
     bool done = false;
     ALLEGRO_EVENT event;
 
     al_start_timer(timer);
 
-    //SquareObstacle * test = new SquareObstacle(600, 400, 30);
+    std::vector<Point> playertemp = {Point(0, 0), Point(50, 30), Point(0, 60)};
+    Player * player = new Player(3, playertemp);
+
     std::vector<Point> t = {Point(50, 50), Point(100, 100), Point(200, 75)};
     std::vector<Point> t2 = {Point(250, 50), Point(300, 100), Point(400, 75)};
     Object * test = new Object(3, t);
@@ -86,7 +91,6 @@ int main(int argc, char **argv){
                     player -> move(Point(player -> speed, 0));
                 }
                 
-                //test -> move(-1, 0);
                 break;
             case ALLEGRO_EVENT_KEY_DOWN:
                 switch(event.keyboard.keycode){
@@ -138,7 +142,6 @@ int main(int argc, char **argv){
             printf("%d", test -> check_collision(test2));
             if(player -> check_collision(test2))
                 sleep(2);
-            //test -> update();
             al_flip_display();
             redraw = false;
         }
