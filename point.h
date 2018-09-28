@@ -3,8 +3,8 @@
 
 class Point{
     public:
-        int x, y;
-        Point(int x, int y);
+        float x, y;
+        Point(float x, float y);
         Point();
         Point& operator+=(const Point& a){
             this -> x += a.x;

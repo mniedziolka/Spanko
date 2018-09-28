@@ -1,7 +1,7 @@
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_primitives.h>
 #include <vector>
-
+#include <cstdio>
 #include "object.h"
 #include "point.h"
 
@@ -19,6 +19,7 @@ void Object::move(Point vec){
 bool Object::check_collision(Object *p_obstacle){
     for(int k = 0; k < this -> n; k++){
         int x = this -> vertices[k].x, y = this -> vertices[k].y;
+        printf("%d %d\n", x, y);
         int i, j = 0;
         bool oddNODES = false;
         for (i = 0; i < p_obstacle -> n; i++){
