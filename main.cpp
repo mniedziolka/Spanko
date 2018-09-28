@@ -131,10 +131,12 @@ int main(int argc, char **argv){
         {
             al_clear_to_color(al_map_rgb(0, 0, 0));
             player.update();
-            test -> move(Point(2, 0));
+            test -> move(Point(2, 0)); 
             test -> draw();
             test2 -> draw();
-            printf("%d", test -> check_collision(*test2));
+            printf("%d", test -> check_collision(test2));
+            if(test -> check_collision(test2))
+                sleep(2);
             //test -> update();
             al_flip_display();
             redraw = false;

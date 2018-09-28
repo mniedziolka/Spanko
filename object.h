@@ -12,7 +12,7 @@ class Object {
     public:
         Object(int n, std::vector<Point> &vertices);
         void move(Point vec);
-        bool check_collision(Object obstacle);
+        bool check_collision(Object *p_obstacle);
         void draw();
 };
 
