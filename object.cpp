@@ -1,3 +1,5 @@
+#include <allegro5/allegro.h>
+#include <allegro5/allegro_primitives.h>
 #include <vector>
 
 #include "object.h"
@@ -33,6 +35,12 @@ bool Object::check_collision(Object obstacle){
         if(oddNODES)
             return oddNODES;
     }
-    return false;
-    
+    return false;   
+}
+
+void Object::draw(){
+    for(int i = 0; i < this -> n - 1; i++){
+        al_draw_line(this -> vertices[i].x, this -> vertices[i].y, this -> vertices[i + 1].x, this -> vertices[i + 1].y, al_map_rgb(0, 200, 0), 4);
+    }
+    al_draw_line(this -> vertices[this -> n - 1].x, this -> vertices[this -> n - 1].y, this -> vertices[0].x, this -> vertices[0].y, al_map_rgb(0, 200, 0), 4);
 }
