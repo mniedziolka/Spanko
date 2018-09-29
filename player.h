@@ -11,6 +11,7 @@ class Player : public Object{
     public:
         float speed = 5.0;
         Player(int n, std::vector<Point> &vertices) : Object(n, vertices) {}
+        bool is_on_display();
 };
 
 #endif

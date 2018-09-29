@@ -91,15 +91,27 @@ int main(int argc, char **argv){
                 redraw = true;
                 if (keys[UP]){
                     player -> move(Point(0, -(player -> speed)));
+                    if(!player -> is_on_display()){
+                        player -> move(Point(0, player -> speed));
+                    }
                 }
                 if (keys[DOWN]){
                     player -> move(Point(0, player -> speed));
+                    if(!player -> is_on_display()){
+                        player -> move(Point(0, -(player -> speed)));
+                    }
                 }
                 if (keys[LEFT]){
                     player -> move(Point(-(player -> speed), 0));
+                    if(!player -> is_on_display()){
+                        player -> move(Point(player -> speed, 0));
+                    }
                 }
                 if (keys[RIGHT]){
                     player -> move(Point(player -> speed, 0));
+                    if(!player -> is_on_display()){
+                        player -> move(Point(-(player -> speed), 0));
+                    }
                 }
                 
                 break;

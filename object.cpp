@@ -39,16 +39,6 @@ bool Object::check_collision(Object *p_obstacle){
     return false;   
 }
 
-bool Object::is_on_display(){
-    for(int i = 0; i < this -> n; i++){
-        if((this -> vertices[i].x > 0 && this -> vertices[i].y > 0) /*&& this -> vertices[i].x < WIDTH &&  this -> vertices[i].y < HEIGHT*/){
-            return true;
-        }
-    }
-    return false;
-}
-
-
 void Object::draw(){
     for(int i = 0; i < this -> n - 1; i++){
         al_draw_line(this -> vertices[i].x, this -> vertices[i].y, this -> vertices[i + 1].x, this -> vertices[i + 1].y, al_map_rgb(0, 200, 0), 4);
