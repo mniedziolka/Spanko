@@ -1,7 +1,8 @@
-#include <cstdio>
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_primitives.h>
 #include <allegro5/allegro_image.h>
+#include <cstdio>
+#include <random>
 
 #include "object.h"
 #include "player.h"
@@ -68,10 +69,14 @@ int main(int argc, char **argv){
     std::vector<Point> playertemp = {Point(0, 0), Point(50, 30), Point(0, 60)};
     Player * player = new Player(3, playertemp);
 
-    std::vector<Point> t = {Point(50, 50), Point(100, 100), Point(200, 75)};
-    std::vector<Point> t2 = {Point(250, 50), Point(300, 100), Point(400, 75)};
+    //PROWIZORA ŁAMANE NA FUSZERA
+    std::vector<Point> t = {Point(800, 50), Point(900,100), Point(900, 75)};
+    std::vector<Point> t2 = {Point(800, 200), Point(800, 300), Point(900, 300), Point(900, 200)};
+    std::vector<Point> t3 = {Point(800, 400), Point(750, 420), Point(780, 440), Point(830, 465), Point(870, 420)};
     Object * test = new Object(3, t);
     Object * test2 = new Object(3, t2);
+    Object * test3 = new Object(5, t3);
+
     
     while(!done){
         al_wait_for_event(queue, &event);
@@ -136,9 +141,12 @@ int main(int argc, char **argv){
         {
             al_clear_to_color(al_map_rgb(0, 0, 0));
             player -> draw();
-            //test -> move(Point(2, 0)); 
+            test -> move(Point(-2, 0)); 
+            test2 -> move(Point(-5, 0));
+            test3 -> move(Point(-1, 0));
             test -> draw();
             test2 -> draw();
+            test3 -> draw();
             printf("%d", test -> check_collision(test2));
             if(player -> check_collision(test2))
                 sleep(2);
