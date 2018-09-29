@@ -2,6 +2,7 @@
 #include <allegro5/allegro_primitives.h>
 #include <vector>
 
+#include "globals.h"
 #include "object.h"
 #include "point.h"
 
@@ -11,7 +12,7 @@ Object::Object(int n, std::vector<Point> &vertices){
 }
 
 void Object::move(Point vec){
-    for(int i = 0; i < n; i++){
+    for(int i = 0; i < this -> n; i++){
         this -> vertices[i] += vec;
     }
 }
@@ -37,6 +38,16 @@ bool Object::check_collision(Object *p_obstacle){
     }
     return false;   
 }
+
+bool Object::is_on_display(){
+    for(int i = 0; i < this -> n; i++){
+        if((this -> vertices[i].x > 0 && this -> vertices[i].y > 0) && this -> vertices[i].x < WIDTH &&  this -> vertices[i].y < HEIGHT){
+            return true;
+        }
+    }
+    return false;
+}
+
 
 void Object::draw(){
     for(int i = 0; i < this -> n - 1; i++){
