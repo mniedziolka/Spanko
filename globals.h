@@ -3,7 +3,6 @@
 
 const int WIDTH = 960;
 const int HEIGHT = 540;
-const int NUM_METEORS = 5;
-const int NUM_WAVES = 1;
+const int NUM_METEORS = 20;
 
 #endif

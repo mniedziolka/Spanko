@@ -70,18 +70,18 @@ int main(int argc, char **argv){
     Player * player = new Player(3, playertemp);
 
     //PROWIZORA ŁAMANE NA FUSZERA
-    Obstacle * obstacle[NUM_WAVES][NUM_METEORS];
-    for(int i = 0; i < NUM_WAVES; i++){
-        for(int j = 0; j < NUM_METEORS; j++){
-            std::vector<Point> obsttemp = {Point(700, j * 100)};
-            obstacle[i][j] = new Obstacle(1, obsttemp);
-            if(obstacle[i][j] == nullptr){
-                fprintf(stderr, "Failed to create an obstacle!\n");
-                exit(-1);
-            }
-            obstacle[i][j] -> randomise();
+    Obstacle * obstacle[NUM_METEORS];
+    
+    for(int j = 0; j < NUM_METEORS; j++){
+        std::vector<Point> obsttemp = {Point(700, (j + 1) * 100)};
+        obstacle[j] = new Obstacle(1, obsttemp);
+        if(obstacle[j] == nullptr){
+            fprintf(stderr, "Failed to create an obstacle!\n");
+            exit(-1);
         }
+        obstacle[j] -> randomise(j);
     }
+    
 
     
     while(!done){
@@ -148,13 +148,21 @@ int main(int argc, char **argv){
             player -> draw();
             
             for(int i = 0; i < NUM_METEORS; i++){
-                if(obstacle[0][i] == nullptr){
-                    fprintf(stderr, "Failed to create an obstacle!\n");
+                if(obstacle[i] == nullptr){
+                    fprintf(stderr, "Obstacle doesn't exist!\n");
                     exit(-1);
                 }
-                obstacle[0][i] -> move(Point(-5, 0));
-                obstacle[0][i] -> draw();
+                if(!obstacle[i] -> is_on_display()){
+                    obstacle[i] -> randomise(i);
+                }
+                obstacle[i] -> move(Point(-5, 0));
+                obstacle[i] -> draw();
+                if(player -> check_collision(obstacle[i])){
+                    printf("GAMEOVER\n");
+                    return 0;
+                }
             }
+            
             
             al_flip_display();
             redraw = false;

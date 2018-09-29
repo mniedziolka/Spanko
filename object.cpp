@@ -41,7 +41,7 @@ bool Object::check_collision(Object *p_obstacle){
 
 bool Object::is_on_display(){
     for(int i = 0; i < this -> n; i++){
-        if((this -> vertices[i].x > 0 && this -> vertices[i].y > 0) && this -> vertices[i].x < WIDTH &&  this -> vertices[i].y < HEIGHT){
+        if((this -> vertices[i].x > 0 && this -> vertices[i].y > 0) /*&& this -> vertices[i].x < WIDTH &&  this -> vertices[i].y < HEIGHT*/){
             return true;
         }
     }
