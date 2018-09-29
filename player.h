@@ -9,6 +9,7 @@
 
 class Player : public Object{
     public:
+        int score = 0;
         float speed = 5.0;
         Player(int n, std::vector<Point> &vertices) : Object(n, vertices) {}
         bool is_on_display();

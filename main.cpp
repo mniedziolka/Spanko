@@ -29,7 +29,7 @@ int main(int argc, char **argv){
     ALLEGRO_DISPLAY* display = nullptr;
 
     display = al_create_display(WIDTH, HEIGHT);
-    al_set_window_title(display, "Check Window");
+    al_set_window_title(display, "Spanko The Game");
 
     if(!display){
         fprintf(stderr, "Failed to create display!\n");
@@ -69,7 +69,6 @@ int main(int argc, char **argv){
     std::vector<Point> playertemp = {Point(0, 0), Point(50, 30), Point(0, 60)};
     Player * player = new Player(3, playertemp);
 
-    //PROWIZORA ŁAMANE NA FUSZERA
     Obstacle * obstacle[NUM_METEORS];
     
     for(int j = 0; j < NUM_METEORS; j++){
@@ -170,12 +169,12 @@ int main(int argc, char **argv){
                 obstacle[i] -> move(Point(-5, 0));
                 obstacle[i] -> draw();
                 if(player -> check_collision(obstacle[i])){
-                    printf("GAMEOVER\n");
+                    printf("GAMEOVER\nYou ended with %d points\n", player -> score);
                     return 0;
                 }
             }
             
-            
+            player -> score++;
             al_flip_display();
             redraw = false;
         }
