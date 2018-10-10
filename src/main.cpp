@@ -13,7 +13,7 @@ enum KEYS{UP, DOWN, LEFT, RIGHT};
 bool keys[4];
 
 int main(int argc, char **argv){
-
+    printf("TEST\n");
     if(!al_init()){
         fprintf(stderr, "Failed to initialize allegro!\n");
         exit(-1);
