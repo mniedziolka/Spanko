@@ -1,4 +1,3 @@
-g++ *.cpp -o Spanko -I include -std=c++14 $(pkg-config allegro-5 allegro_primitives-5 allegro_image-5 --libs --cflags)
 Modele:
 
 Samolot
