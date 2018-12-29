@@ -168,7 +168,7 @@ int main(int argc, char **argv){
                 }
                 obstacle[i] -> move(Point(-5, 0));
                 obstacle[i] -> draw();
-                if(player -> check_collision(obstacle[i])){
+                if(player -> check_collision(obstacle[i]) || obstacle[i] -> check_collision(player)){
                     printf("GAMEOVER\nYou ended with %d points\n", player -> score);
                     return 0;
                 }
