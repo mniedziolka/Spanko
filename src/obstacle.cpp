@@ -7,7 +7,7 @@ inline float rand_range(int a, int b){return (rand() % (b-a+1) ) + a; }
 
 void Obstacle::randomise(unsigned int seed){
     srand(seed);
-    Point begin = Point(rand_range(900, 1300), rand_range(100, 400));
+    Point begin = Point(rand_range(900, 1500), rand_range(100, 450));
     vertices[0] = begin;
     int n_old = this -> n;
     this -> n = rand_range(3, 10);
@@ -18,4 +18,13 @@ void Obstacle::randomise(unsigned int seed){
             this -> vertices[i] = Point(rand_range(begin.x - 50, begin.x + 50), rand_range(begin.y - 50, begin.y + 50));
         }
     }
+}
+
+bool Obstacle::is_on_display(){
+    for(int i = 0; i < this -> n; i++){
+        if((this -> vertices[i].x > 0 && this -> vertices[i].y > 0)){
+            return true;
+        }
+    }
+    return false;
 }

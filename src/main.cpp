@@ -13,7 +13,7 @@ enum KEYS{UP, DOWN, LEFT, RIGHT};
 bool keys[4];
 
 int main(int argc, char **argv){
-
+    printf("TEST\n");
     if(!al_init()){
         fprintf(stderr, "Failed to initialize allegro!\n");
         exit(-1);
@@ -29,7 +29,7 @@ int main(int argc, char **argv){
     ALLEGRO_DISPLAY* display = nullptr;
 
     display = al_create_display(WIDTH, HEIGHT);
-    al_set_window_title(display, "Check Window");
+    al_set_window_title(display, "Spanko The Game");
 
     if(!display){
         fprintf(stderr, "Failed to create display!\n");
@@ -69,7 +69,6 @@ int main(int argc, char **argv){
     std::vector<Point> playertemp = {Point(0, 0), Point(50, 30), Point(0, 60)};
     Player * player = new Player(3, playertemp);
 
-    //PROWIZORA ŁAMANE NA FUSZERA
     Obstacle * obstacle[NUM_METEORS];
     
     for(int j = 0; j < NUM_METEORS; j++){
@@ -91,15 +90,27 @@ int main(int argc, char **argv){
                 redraw = true;
                 if (keys[UP]){
                     player -> move(Point(0, -(player -> speed)));
+                    if(!player -> is_on_display()){
+                        player -> move(Point(0, player -> speed));
+                    }
                 }
                 if (keys[DOWN]){
                     player -> move(Point(0, player -> speed));
+                    if(!player -> is_on_display()){
+                        player -> move(Point(0, -(player -> speed)));
+                    }
                 }
                 if (keys[LEFT]){
                     player -> move(Point(-(player -> speed), 0));
+                    if(!player -> is_on_display()){
+                        player -> move(Point(player -> speed, 0));
+                    }
                 }
                 if (keys[RIGHT]){
                     player -> move(Point(player -> speed, 0));
+                    if(!player -> is_on_display()){
+                        player -> move(Point(-(player -> speed), 0));
+                    }
                 }
                 
                 break;
@@ -157,13 +168,13 @@ int main(int argc, char **argv){
                 }
                 obstacle[i] -> move(Point(-5, 0));
                 obstacle[i] -> draw();
-                if(player -> check_collision(obstacle[i])){
-                    printf("GAMEOVER\n");
+                if(player -> check_collision(obstacle[i]) || obstacle[i] -> check_collision(player)){
+                    printf("GAMEOVER\nYou ended with %d points\n", player -> score);
                     return 0;
                 }
             }
             
-            
+            player -> score++;
             al_flip_display();
             redraw = false;
         }
