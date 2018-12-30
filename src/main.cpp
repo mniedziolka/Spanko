@@ -12,17 +12,30 @@
 enum KEYS{UP, DOWN, LEFT, RIGHT};
 bool keys[4];
 
-int main(int argc, char **argv){
+int main(int argc, char **argv){    
+
     printf("TEST\n");
     if(!al_init()){
         fprintf(stderr, "Failed to initialize allegro!\n");
         exit(-1);
     }
 
+    if(!al_init_image_addon()){
+        fprintf(stderr, "Failed to initialize image_addon!\n");
+        exit(-1);
+    }
+    ALLEGRO_BITMAP  *image   = NULL;
+
     if(!al_install_keyboard()){
         fprintf(stderr, "Failed to initialize keyboard!\n");
         exit(-1);
     }
+
+    image = al_load_bitmap("/home/niedziol/Spanko/img/hi.bmp");
+    if(image == NULL) {
+      printf("CHUJ\n");
+      return 0;
+   }
 
     ALLEGRO_KEYBOARD_STATE keyboard;
 
@@ -52,10 +65,7 @@ int main(int argc, char **argv){
         fprintf(stderr, "Failed to initialize primitives!\n");
         exit(-1);
     }
-    if(!al_init_image_addon()){
-        fprintf(stderr, "Failed to initialize image_addon!\n");
-        exit(-1);
-    }
+    
     
     al_register_event_source(queue, al_get_keyboard_event_source());
     al_register_event_source(queue, al_get_timer_event_source(timer));
@@ -65,6 +75,13 @@ int main(int argc, char **argv){
     ALLEGRO_EVENT event;
 
     al_start_timer(timer);
+
+    
+    al_draw_bitmap(image, 0, 0, 0);
+    
+
+    al_flip_display();
+    al_rest(2);
 
     std::vector<Point> playertemp = {Point(0, 0), Point(50, 30), Point(0, 60)};
     Player * player = new Player(3, playertemp);
