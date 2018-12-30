@@ -14,7 +14,6 @@ bool keys[4];
 
 int main(int argc, char **argv){    
 
-    printf("TEST\n");
     if(!al_init()){
         fprintf(stderr, "Failed to initialize allegro!\n");
         exit(-1);
@@ -24,19 +23,12 @@ int main(int argc, char **argv){
         fprintf(stderr, "Failed to initialize image_addon!\n");
         exit(-1);
     }
-    ALLEGRO_BITMAP  *image   = NULL;
+   
 
     if(!al_install_keyboard()){
         fprintf(stderr, "Failed to initialize keyboard!\n");
         exit(-1);
     }
-
-    image = al_load_bitmap("/home/niedziol/Spanko/img/hi.bmp");
-    if(image == NULL) {
-      printf("CHUJ\n");
-      return 0;
-   }
-
     ALLEGRO_KEYBOARD_STATE keyboard;
 
     ALLEGRO_DISPLAY* display = nullptr;
@@ -76,6 +68,12 @@ int main(int argc, char **argv){
 
     al_start_timer(timer);
 
+    ALLEGRO_BITMAP *image = nullptr;
+    image = al_load_bitmap("img/hi.bmp");
+    if(!image) {
+        fprintf(stderr, "Failed to load image!\n");
+        exit(-1);
+    }
     
     al_draw_bitmap(image, 0, 0, 0);
     
